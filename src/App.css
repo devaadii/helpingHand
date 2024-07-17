@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+.reg-id {
+  margin: 0 auto;
+  width: 70vw;
+  text-align: center;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.login-button {
+  background-color: #c42421;
+  width: 60vw;
+  height: 48px;
+}
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font: bold;
+  font-size: 1.4rem;
+  color: #332222;
+}
+
+#title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
+  color: #c42421;
+  font-weight: 500;
+}
+p {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+a {
+  color: black;
+}
+#appbar {
+  background-color: white;
+  height: "15vh";
+  display: "flex";
+  justify-content: "center";
+}
