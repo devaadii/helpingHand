@@ -71,6 +71,7 @@ function BloodDonationForm() {
         const imgFile = new File([blob], "cropped-image.png", {
           type: "image/png",
         });
+        setOpenDialog(false);
         console.log(imgFile);
         setFile(imgFile);
 
@@ -394,6 +395,7 @@ function BloodDonationForm() {
             accept="image/*"
             onChange={handleFileChange}
             sx={{ width: "70vw" }}
+            margin="normal"
           />
 
           <Dialog open={openDialog} onClose={handleDialogClose}>
