@@ -10,6 +10,18 @@ import { ExpandMore } from "@mui/icons-material";
 import { fetchRecipients, fetchId } from "../api/recipients";
 import { fetchOrg, fetchOrgId } from "../api/organisation";
 
+import "react-image-crop/dist/ReactCrop.css";
+import { useRef } from "react";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+import { drawImageOnCanvas, generateDownload } from "../components/utils";
+import {
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+
 function BloodDonationForm() {
   const [selectedRecipient, setSelectedRecipient] = useState(null);
   const [customRecipientNumber, setCustomRecipientNumber] = useState("");
@@ -20,13 +32,80 @@ function BloodDonationForm() {
   const [donatedOn, setDonatedOn] = useState("");
   const [unitsDonated, setUnitsDonated] = useState("");
   const [options, setOptions] = useState([]);
-  const [file, setFile] = useState("");
+
   const [expanded, setExpanded] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errMessage, setErrMessage] = useState("");
   const [about, setAbout] = useState("");
   const [address, setAddress] = useState("");
   const [resetInputField, setResetInputField] = useState(false);
+  const [imgSrc, setImgSrc] = useState();
+  const [crop, setCrop] = useState();
+  const [file, setFile] = useState(null); // State to hold the selected file
+  const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
+  const [completedCrop, setCompletedCrop] = useState(null);
+
+  const imgRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setImgSrc(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+      setOpenDialog(true);
+    }
+  };
+
+  const handleCompleteCrop = (crop) => {
+    drawImageOnCanvas(imgRef.current, canvasRef.current, crop);
+    setCompletedCrop(crop);
+  };
+
+  const handleSend = () => {
+    const canvas = canvasRef.current;
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const imgFile = new File([blob], "cropped-image.png", {
+          type: "image/png",
+        });
+        console.log(imgFile);
+        setFile(imgFile);
+
+        // Optionally, create a download link
+        // const url = URL.createObjectURL(imgFile);
+        // const a = document.createElement("a");
+        // a.href = url;
+        // a.download = "cropped-image.png";
+        // a.click();
+        // URL.revokeObjectURL(url); // Clean up
+      }
+
+      // const url = URL.createObjectURL(blob);
+      // const formImage = document.createElement("a");
+      // a.href = url;
+      // a.download = "cropped-image.png";
+      // a.click();
+      // console.log(url);
+      // console.log(a);
+    });
+    // const url = URL.createObjectURL(blob);
+
+    // generateDownload(canvasRef.current, completedCrop);
+    // console.log(url);
+  };
+
+  // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+  const canvasStyles = {
+    width: Math.round(completedCrop?.width ?? 0),
+    height: Math.round(completedCrop?.height ?? 0),
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   const fetchOrganisation = async (query) => {
     const data = await fetchOrg(query);
@@ -99,6 +178,7 @@ function BloodDonationForm() {
             "Content-Type": "multipart/form-data",
           },
         });
+        console.log(file);
         console.log(response.data);
         setSuccessMessage(response.data.message);
         resetForm();
@@ -308,17 +388,47 @@ function BloodDonationForm() {
               />
             )}
           />
+
           <TextField
             type="file"
-            variant="outlined"
             accept="image/*"
-            capture="environment"
-            onChange={(e) => {
-              setFile(e.target.files[0]);
-            }}
-            margin="normal"
+            onChange={handleFileChange}
             sx={{ width: "70vw" }}
           />
+
+          <Dialog open={openDialog} onClose={handleDialogClose}>
+            <DialogTitle>Selected Image</DialogTitle>
+            <DialogContent style={{ width: "70vw", height: "50vh" }}>
+              <div className="CropperWrapper">
+                <ReactCrop
+                  crop={crop}
+                  onChange={setCrop}
+                  aspect={1}
+                  onComplete={handleCompleteCrop}
+                >
+                  {imgSrc && (
+                    <img ref={imgRef} src={imgSrc} alt="cropper image" />
+                  )}
+                </ReactCrop>
+                {!imgSrc && <p className="InfoText">Choose file to crop</p>}
+                <div className="CanvasWrapper">
+                  <canvas ref={canvasRef} style={canvasStyles} />
+                </div>
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <button
+                type="button"
+                disabled={!completedCrop}
+                onClick={handleSend}
+              >
+                Set Image
+              </button>
+              <Button onClick={handleDialogClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
           {/* <input
             type="file"
             accept="image/*"

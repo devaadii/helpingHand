@@ -11,7 +11,6 @@ import BloodDonationForm from "./pages/BloodDonationForm";
 import Login from "./pages/Login";
 import Protected from "./pages/Protected";
 import authContext from "./contexts/authContext";
-import BloodDonationForm2 from "./pages/BloodDonationForm2";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,10 +31,7 @@ function App() {
               path="/Blood-Donation-Form"
               element={<BloodDonationForm />}
             />
-            <Route
-              path="/Blood-Donation-Form2"
-              element={<BloodDonationForm2 />}
-            />
+
             <Route path="/Other-Help" element={<OtherHelp />} />
           </Route>
           <Route path="/" element={<Register />} />
