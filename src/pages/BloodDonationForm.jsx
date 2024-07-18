@@ -7,6 +7,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { ExpandMore } from "@mui/icons-material";
+import { fetchRecipients, fetchId } from "../api/recipients";
+import { fetchOrg, fetchOrgId } from "../api/organisation";
 
 function BloodDonationForm() {
   const [selectedRecipient, setSelectedRecipient] = useState(null);
@@ -26,26 +28,22 @@ function BloodDonationForm() {
   const [address, setAddress] = useState("");
   const [resetInputField, setResetInputField] = useState(false);
 
-  const fetchOrganisation = (query) => {
-    axiosInstance
-      .get(`/organisation?search=${query}`)
-      .then((response) => {
-        setOrganisations(response.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const fetchOrganisation = async (query) => {
+    const data = await fetchOrg(query);
+    try {
+      setOrganisations(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const fetchOptions = (query) => {
-    axiosInstance
-      .get(`/recipients?search=${query}`)
-      .then((response) => {
-        setOptions(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching recipients:", error);
-      });
+  const fetchOptions = async (query) => {
+    const data = await fetchRecipients(query);
+    try {
+      setOptions(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getRecipientId = async () => {
@@ -54,14 +52,9 @@ function BloodDonationForm() {
     } else {
       const fullName = customRecipientName;
       const mobileNumber = customRecipientNumber;
+      const data = await fetchId(fullName, mobileNumber, about, address);
       try {
-        const response = await axiosInstance.post("/recipients", {
-          fullName,
-          mobileNumber,
-          about,
-          address,
-        });
-        return response.data.data._id;
+        return data;
       } catch (err) {
         console.log(err);
       }
@@ -80,14 +73,8 @@ function BloodDonationForm() {
     if (selectedOrganisation) {
       return selectedOrganisation._id;
     } else {
-      const name = customOrganisation;
-      try {
-        const response = await axiosInstance.post("/organisation", { name });
-        return response.data.data._id;
-      } catch (err) {
-        console.log(err);
-        throw err;
-      }
+      const data = await fetchOrgId(customOrganisation);
+      return data;
     }
   };
 
@@ -120,7 +107,7 @@ function BloodDonationForm() {
         setErrMessage("No organisation selected or entered");
       } else if (organisationId) {
         console.log("No recipient  selected or entered");
-        setErrMessage("No recipient selected or entered");
+        setErrMessage("No recipientselected or entered");
       } else {
         console.log("No recipient or organisation selected or entered");
         setErrMessage("No recipient or organisation selected or entered");
