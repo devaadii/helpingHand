@@ -6,7 +6,7 @@ import axiosInstance from "../axios/axios";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandMore, Padding } from "@mui/icons-material";
 import { fetchRecipients, fetchId } from "../api/recipients";
 import { fetchOrg, fetchOrgId } from "../api/organisation";
 
@@ -32,6 +32,7 @@ function BloodDonationForm() {
   const [donatedOn, setDonatedOn] = useState("");
   const [unitsDonated, setUnitsDonated] = useState("");
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [expanded, setExpanded] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -49,8 +50,9 @@ function BloodDonationForm() {
   const canvasRef = useRef(null);
 
   const handleFileChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
+    if (e.target.files) {
       setFile(e.target.files[0]);
+      console.log(e.target.files[0]);
 
       const reader = new FileReader();
       reader.addEventListener("load", () => setImgSrc(reader.result));
@@ -76,7 +78,7 @@ function BloodDonationForm() {
         setFile(imgFile);
 
         // Optionally, create a download link
-        // const url = URL.createObjectURL(imgFile);
+        const url = URL.createObjectURL(imgFile);
         // const a = document.createElement("a");
         // a.href = url;
         // a.download = "cropped-image.png";
@@ -100,8 +102,10 @@ function BloodDonationForm() {
 
   // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
   const canvasStyles = {
-    width: Math.round(completedCrop?.width ?? 0),
+    width: "68vw",
     height: Math.round(completedCrop?.height ?? 0),
+    border: "2px solid black",
+    padding: "2px",
   };
 
   const handleDialogClose = () => {
@@ -144,7 +148,6 @@ function BloodDonationForm() {
     const timer = setTimeout(() => {
       setSuccessMessage("");
       setErrMessage("");
-      console.log("done");
     }, 3000);
     return () => clearTimeout(timer);
   }, [successMessage, errMessage]);
@@ -159,6 +162,7 @@ function BloodDonationForm() {
   };
 
   const handleFormSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const organisationId = await getOrganisationId();
@@ -182,6 +186,7 @@ function BloodDonationForm() {
         console.log(file);
         console.log(response.data);
         setSuccessMessage(response.data.message);
+        setLoading(false);
         resetForm();
       } else if (recipientId) {
         console.log("No organisation selected or entered");
@@ -398,6 +403,12 @@ function BloodDonationForm() {
             margin="normal"
           />
 
+          {crop ? (
+            <div className="CanvasWrapper">
+              <canvas ref={canvasRef} style={canvasStyles} />
+            </div>
+          ) : null}
+
           <Dialog open={openDialog} onClose={handleDialogClose}>
             <DialogTitle>Selected Image</DialogTitle>
             <DialogContent style={{ width: "70vw", height: "50vh" }}>
@@ -412,10 +423,6 @@ function BloodDonationForm() {
                     <img ref={imgRef} src={imgSrc} alt="cropper image" />
                   )}
                 </ReactCrop>
-                {!imgSrc && <p className="InfoText">Choose file to crop</p>}
-                <div className="CanvasWrapper">
-                  <canvas ref={canvasRef} style={canvasStyles} />
-                </div>
               </div>
             </DialogContent>
             <DialogActions>
@@ -424,7 +431,7 @@ function BloodDonationForm() {
                 disabled={!completedCrop}
                 onClick={handleSend}
               >
-                Set Image
+                Crop Image
               </button>
               <Button onClick={handleDialogClose} color="primary">
                 Close
@@ -444,6 +451,7 @@ function BloodDonationForm() {
           {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
           {errMessage && <p style={{ color: "#c42421" }}>{errMessage}</p>}
           <Button
+            disabled={loading}
             variant="contained"
             type="submit"
             className="login-button"
@@ -453,7 +461,7 @@ function BloodDonationForm() {
               backgroundColor: "#C42421",
             }}
           >
-            Submit
+            Submit{loading}
           </Button>
         </form>
         <BottomNav />
