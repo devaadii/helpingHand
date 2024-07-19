@@ -9,6 +9,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import { ExpandMore, Padding } from "@mui/icons-material";
 import { fetchRecipients, fetchId } from "../api/recipients";
 import { fetchOrg, fetchOrgId } from "../api/organisation";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 import "react-image-crop/dist/ReactCrop.css";
 import { useRef } from "react";
@@ -54,6 +56,18 @@ function BloodDonationForm() {
 
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -201,16 +215,20 @@ function BloodDonationForm() {
       } else if (recipientId) {
         console.log("No organisation selected or entered");
         setErrMessage("No organisation selected or entered");
+        setLoading(false);
       } else if (organisationId) {
         console.log("No recipient  selected or entered");
         setErrMessage("No recipientselected or entered");
+        setLoading(false);
       } else {
         console.log("No recipient or organisation selected or entered");
         setErrMessage("No recipient or organisation selected or entered");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
       setErrMessage(error.response.data.message);
+      setLoading(false);
     }
   };
   const handleAutocompleteClick = () => {
@@ -460,8 +478,30 @@ function BloodDonationForm() {
             style={{ marginTop: "15px" }}
           /> */}
 
-          {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-          {errMessage && <p style={{ color: "#c42421" }}>{errMessage}</p>}
+          {successMessage && (
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="success"
+                variant="filled"
+                sx={{ width: "100%" }}
+              >
+                {successMessage}
+              </Alert>
+            </Snackbar>
+          )}
+          {errMessage && (
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="error"
+                variant="filled"
+                sx={{ width: "100%" }}
+              >
+                {errMessage}
+              </Alert>
+            </Snackbar>
+          )}
           <Button
             disabled={loading}
             variant="contained"
