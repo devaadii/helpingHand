@@ -33,6 +33,7 @@ function BloodDonationForm() {
   const [unitsDonated, setUnitsDonated] = useState("");
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [render, setRender] = useState(true);
 
   const [expanded, setExpanded] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -40,8 +41,13 @@ function BloodDonationForm() {
   const [about, setAbout] = useState("");
   const [address, setAddress] = useState("");
   const [resetInputField, setResetInputField] = useState(false);
-  const [imgSrc, setImgSrc] = useState();
-  const [crop, setCrop] = useState();
+  const [imgSrc, setImgSrc] = useState("");
+  const [crop, setCrop] = useState({
+    unit: "%",
+    width: 100,
+    height: 100,
+    aspect: 1,
+  });
   const [file, setFile] = useState(null); // State to hold the selected file
   const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
   const [completedCrop, setCompletedCrop] = useState(null);
@@ -102,14 +108,18 @@ function BloodDonationForm() {
 
   // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
   const canvasStyles = {
-    width: "68vw",
     height: Math.round(completedCrop?.height ?? 0),
+    width: Math.round(completedCrop?.width ?? 0),
     border: "2px solid black",
     padding: "2px",
   };
 
   const handleDialogClose = () => {
     setOpenDialog(false);
+    setFile("");
+    setRender((prev) => {
+      !prev;
+    });
   };
 
   const fetchOrganisation = async (query) => {
@@ -228,6 +238,7 @@ function BloodDonationForm() {
     setExpanded(false);
     setAbout("");
     setAddress("");
+    setImgSrc("");
   };
 
   return (
@@ -401,9 +412,10 @@ function BloodDonationForm() {
             onChange={handleFileChange}
             sx={{ width: "70vw" }}
             margin="normal"
+            key={render}
           />
 
-          {crop ? (
+          {file ? (
             <div className="CanvasWrapper">
               <canvas ref={canvasRef} style={canvasStyles} />
             </div>
