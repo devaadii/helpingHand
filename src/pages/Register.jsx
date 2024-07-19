@@ -5,13 +5,17 @@ import { TextField, Button } from "@mui/material";
 import axiosInstance from "../axios/axios";
 import { Link, useNavigate } from "react-router-dom";
 import authContext from "../contexts/authContext";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 function Register() {
   const [fullName, setFullName] = useState("");
   const [mobileNumber, setMobileNummber] = useState("");
   const [password, setPassword] = useState("");
   const { auth, setAuth } = useContext(authContext);
+  const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const storedAuth = localStorage.getItem("authData");
@@ -33,7 +37,17 @@ function Register() {
       })
       .catch((error) => {
         console.log(error);
+        setErrMessage(error.response.data.message);
+        setOpen(true);
       });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -64,7 +78,7 @@ function Register() {
                 color: "#737373",
               },
             }}
-            sx={{ width: "60vw", backgroundColor: "#E9E9F4" }}
+            sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
           />
 
           <TextField
@@ -82,7 +96,7 @@ function Register() {
                 color: "#737373",
               },
             }}
-            sx={{ width: "60vw", backgroundColor: "#E9E9F4" }}
+            sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
           />
 
           <TextField
@@ -100,7 +114,7 @@ function Register() {
                 color: "#737373",
               },
             }}
-            sx={{ width: "60vw", backgroundColor: "#E9E9F4" }}
+            sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
           />
           <Button
             className="login-button"
@@ -115,6 +129,18 @@ function Register() {
         <p>
           already have an Account , <Link to="/Login">login</Link>
         </p>
+        {errMessage && (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              {errMessage}
+            </Alert>
+          </Snackbar>
+        )}
       </div>
     </>
   );

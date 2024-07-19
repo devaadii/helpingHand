@@ -5,13 +5,24 @@ import axiosInstance from "../axios/axios";
 import { useNavigate, Link } from "react-router-dom";
 import authContext from "../contexts/authContext";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 function Login() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
   const { auth, setAuth } = useContext(authContext);
-  const [message, setMessage] = useState("");
+  const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     const storedAuth = localStorage.getItem("authData");
@@ -39,7 +50,8 @@ function Login() {
       })
       .catch((error) => {
         console.log(error);
-        setMessage(error.response.data.message);
+        setErrMessage(error.response.data.message);
+        setOpen(true);
       });
   };
 
@@ -72,7 +84,7 @@ function Login() {
                 },
               }}
               onChange={(e) => setMobileNumber(e.target.value)}
-              sx={{ width: "60vw", backgroundColor: "#E9E9F4" }}
+              sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
             />
             <TextField
               id="password"
@@ -87,7 +99,7 @@ function Login() {
                 },
               }}
               onChange={(e) => setPassword(e.target.value)}
-              sx={{ width: "60vw", backgroundColor: "#E9E9F4" }}
+              sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
             />{" "}
           </div>
           <Button
@@ -101,9 +113,20 @@ function Login() {
         </form>
         <div>
           <p>
-            Don't have an Account? <Link to="/">signup</Link>
+            Don't have an Account? <Link to="/">sign up</Link>
           </p>
-          {{ message } && <p> {message}</p>}
+          {errMessage && (
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="error"
+                variant="filled"
+                sx={{ width: "100%" }}
+              >
+                {errMessage}
+              </Alert>
+            </Snackbar>
+          )}
         </div>
       </div>
     </>
