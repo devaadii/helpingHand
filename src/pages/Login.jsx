@@ -29,11 +29,6 @@ function Login() {
     if (storedAuth) {
       navigate("/Blood-Donation-Form");
     }
-    // Have to remove this code
-    // return () => {
-    //   localStorage.removeItem("auth");
-    // };
-    //
   }, []);
 
   const handleClick = () => {

@@ -40,3 +40,10 @@ a {
   display: "flex";
   justify-content: "center";
 }
+
+#icon {
+  width: 4vw;
+}
+#icon1 {
+  width: 5vw;
+}
