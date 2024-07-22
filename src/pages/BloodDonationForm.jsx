@@ -60,6 +60,19 @@ function BloodDonationForm() {
   const handleClick = () => {
     setOpen(true);
   };
+  const validateForm = () => {
+    if (customRecipientNumber.length !== 10) {
+      setErrMessage("Mobile number must be 10 digits");
+      return false;
+    }
+    if (unitsDonated <= 0) {
+      setErrMessage("Units donated must be a positive number");
+      return false;
+    }
+    return true;
+  };
+  const isMobileNumberValid = customRecipientNumber.length === 10;
+  const isUnitsDonatedValid = unitsDonated > 0;
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -186,8 +199,13 @@ function BloodDonationForm() {
   };
 
   const handleFormSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const organisationId = await getOrganisationId();
       const recipientId = await getRecipientId();
@@ -207,29 +225,20 @@ function BloodDonationForm() {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(file);
-        console.log(response.data);
         setSuccessMessage(response.data.message);
-        setLoading(false);
         resetForm();
-      } else if (recipientId) {
-        console.log("No organisation selected or entered");
+      } else if (!recipientId) {
+        setErrMessage("No recipient selected or entered");
+      } else if (!organisationId) {
         setErrMessage("No organisation selected or entered");
-        setLoading(false);
-      } else if (organisationId) {
-        console.log("No recipient  selected or entered");
-        setErrMessage("No recipientselected or entered");
-        setLoading(false);
       } else {
-        console.log("No recipient or organisation selected or entered");
         setErrMessage("No recipient or organisation selected or entered");
-        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
       setErrMessage(error.response.data.message);
-      setLoading(false);
     }
+    setLoading(false);
   };
   const handleAutocompleteClick = () => {
     if (!selectedRecipient) {
@@ -337,7 +346,12 @@ function BloodDonationForm() {
                         : customRecipientNumber
                     }
                     onChange={(e) => setCustomRecipientNumber(e.target.value)}
-                    margin="normal"
+                    error={customRecipientNumber && !isMobileNumberValid}
+                    helperText={
+                      customRecipientNumber && !isMobileNumberValid
+                        ? "Mobile number must be 10 digits"
+                        : ""
+                    }
                   />
                 )}
               />
@@ -391,6 +405,12 @@ function BloodDonationForm() {
             value={unitsDonated}
             onChange={(e) => setUnitsDonated(e.target.value)}
             margin="normal"
+            error={unitsDonated && !isUnitsDonatedValid}
+            helperText={
+              unitsDonated && !isUnitsDonatedValid
+                ? "Must be a positive number"
+                : ""
+            }
           />
           <Autocomplete
             freeSolo
