@@ -74,7 +74,7 @@ function Header() {
                     color: "#4285F4",
                     textDecoration: "none",
                   }}
-                  to="/BloodDonation-entries"
+                  to="/BloodDonation-entries/:recipientId"
                 >
                   Blood Donation Entry
                 </NavLink>

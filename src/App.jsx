@@ -38,7 +38,7 @@ function App() {
 
             <Route path="/recipient-info" element={<RecipientInfo />} />
             <Route
-              path="/BloodDonation-entries"
+              path="/BloodDonation-entries/:recipientId"
               element={<BloodDonationEntry />}
             />
           </Route>

@@ -7,6 +7,8 @@ import authContext from "../contexts/authContext";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import InputAdornment from "@mui/material/InputAdornment";
 
 function Login() {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -15,6 +17,7 @@ function Login() {
   const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -84,7 +87,7 @@ function Login() {
             <TextField
               id="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               variant="outlined"
               margin="normal"
               value={password}
@@ -95,6 +98,17 @@ function Login() {
               }}
               onChange={(e) => setPassword(e.target.value)}
               sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <RemoveRedEyeIcon
+                      onClick={() => {
+                        setShowPassword((prev) => !prev);
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
             />{" "}
           </div>
           <Button
