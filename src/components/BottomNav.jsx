@@ -8,7 +8,7 @@ import { Paper } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function BottomNav() {
-  const [value, setValue] = useState("Blood-Donation-Form");
+  const [value, setValue] = useState();
   const navigate = useNavigate();
   const location = useLocation();
 

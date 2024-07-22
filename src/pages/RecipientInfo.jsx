@@ -175,7 +175,7 @@ function RecipientInfo() {
                   <IconButton
                     onClick={(event) => handleEditClick(recipient, event)}
                   >
-                    <img src={editIcon} alt="Edit" />
+                    <img id="icon" src={editIcon} alt="Edit" />
                   </IconButton>
                   <Popper id={id} open={open} anchorEl={anchorEl}>
                     <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
@@ -188,19 +188,23 @@ function RecipientInfo() {
                         }}
                       >
                         <h2>Edit Recipient</h2>
-                        <input
+                        <TextField
+                          label="Full Name"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                         />
-                        <input
+                        <TextField
+                          label="Mobile Number"
                           value={mobileNumber}
                           onChange={(e) => setMobileNumber(e.target.value)}
                         />
-                        <input
+                        <TextField
+                          label="About"
                           value={about}
                           onChange={(e) => setAbout(e.target.value)}
                         />
-                        <input
+                        <TextField
+                          label="Address"
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
                         />
@@ -210,7 +214,12 @@ function RecipientInfo() {
                     </Box>
                   </Popper>
                   <IconButton onClick={() => handleInfoClick(recipient._id)}>
-                    <img src={infoIcon} alt="Info" />
+                    <img
+                      id="icon1"
+                      style={{ margin: "0 1vw" }}
+                      src={infoIcon}
+                      alt="Info"
+                    />
                   </IconButton>
                 </div>
               </AccordionSummary>
