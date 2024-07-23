@@ -10,7 +10,8 @@ import {
 import axiosInstance from "../axios/axios";
 import { Link, useNavigate } from "react-router-dom";
 import authContext from "../contexts/authContext";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -137,10 +138,19 @@ function Register() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <RemoveRedEyeIcon
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    style={{ cursor: "pointer" }}
-                  />
+                  {showPassword ? (
+                    <VisibilityOffIcon
+                      onClick={() => {
+                        setShowPassword((prev) => !prev);
+                      }}
+                    />
+                  ) : (
+                    <VisibilityIcon
+                      onClick={() => {
+                        setShowPassword((prev) => !prev);
+                      }}
+                    />
+                  )}
                 </InputAdornment>
               ),
             }}

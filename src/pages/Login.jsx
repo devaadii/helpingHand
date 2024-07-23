@@ -9,6 +9,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import InputAdornment from "@mui/material/InputAdornment";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function Login() {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -33,7 +35,6 @@ function Login() {
       navigate("/Blood-Donation-Form");
     }
   }, []);
-
   const handleClick = () => {
     axiosInstance
       .post("/users/login", {
@@ -113,11 +114,19 @@ function Login() {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <RemoveRedEyeIcon
-                      onClick={() => {
-                        setShowPassword((prev) => !prev);
-                      }}
-                    />
+                    {showPassword ? (
+                      <VisibilityOffIcon
+                        onClick={() => {
+                          setShowPassword((prev) => !prev);
+                        }}
+                      />
+                    ) : (
+                      <VisibilityIcon
+                        onClick={() => {
+                          setShowPassword((prev) => !prev);
+                        }}
+                      />
+                    )}
                   </InputAdornment>
                 ),
               }}
