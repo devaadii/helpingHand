@@ -96,6 +96,7 @@ function RecipientInfo() {
     <div>
       <Header />
       <div
+        className="form"
         style={{
           display: "flex",
           alignItems: "center",
@@ -104,11 +105,10 @@ function RecipientInfo() {
       >
         <h3
           style={{
-            fontSize: "25px",
+            fontSize: "20px",
             padding: "0 2px",
-            margin: "30px auto",
+            marginTop: "30px",
             fontStyle: "italic",
-            fontWeight: "900",
           }}
         >
           Recipient's Information
@@ -143,7 +143,7 @@ function RecipientInfo() {
               elevation={5}
               square="false"
               sx={{
-                padding: "0px 2px",
+                padding: "6px 2px",
                 margin: "20px auto",
 
                 border: "0.5px solid grey",

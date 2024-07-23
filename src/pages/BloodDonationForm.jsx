@@ -200,9 +200,6 @@ function BloodDonationForm() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
 
     setLoading(true);
 
@@ -286,7 +283,7 @@ function BloodDonationForm() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            margin: "60px 60px",
+            margin: "60px auto",
           }}
           onSubmit={handleFormSubmit}
         >
@@ -348,7 +345,7 @@ function BloodDonationForm() {
                         : customRecipientNumber
                     }
                     onChange={(e) => setCustomRecipientNumber(e.target.value)}
-                    error={customRecipientNumber && !isMobileNumberValid}
+                    error={!!customRecipientNumber && !isMobileNumberValid}
                     helperText={
                       customRecipientNumber && !isMobileNumberValid
                         ? "Mobile number must be 10 digits"
@@ -407,7 +404,7 @@ function BloodDonationForm() {
             value={unitsDonated}
             onChange={(e) => setUnitsDonated(e.target.value)}
             margin="normal"
-            error={unitsDonated && !isUnitsDonatedValid}
+            error={!!unitsDonated && !isUnitsDonatedValid}
             helperText={
               unitsDonated && !isUnitsDonatedValid
                 ? "Must be a positive number"
@@ -500,7 +497,7 @@ function BloodDonationForm() {
             style={{ marginTop: "15px" }}
           /> */}
 
-          {successMessage && (
+          {!!successMessage && (
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert
                 onClose={handleClose}
@@ -535,7 +532,7 @@ function BloodDonationForm() {
               backgroundColor: "#C42421",
             }}
           >
-            Submit{loading}
+            {loading ? <p>loading </p> : <p>Submit</p>}
           </Button>
         </form>
         <BottomNav />

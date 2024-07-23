@@ -102,6 +102,7 @@ function BloodDonationEntry() {
       <Header />
 
       <div
+        className="form"
         style={{
           display: "flex",
           alignItems: "center",
@@ -110,10 +111,9 @@ function BloodDonationEntry() {
       >
         <h3
           style={{
-            fontSize: "25px",
+            fontSize: "22px",
             padding: "0 2px",
             fontStyle: "italic",
-            fontWeight: "900",
           }}
         >
           Blood Donation Entries
@@ -167,9 +167,9 @@ function BloodDonationEntry() {
           display: "contents",
         }}
       >
-        {entries.map((entry) => (
+        {entries.map((entry, index) => (
           <li key={entry._id}>
-            {recipientId.length > 15 ? (
+            {(index === 0) & (recipientId.length > 15) ? (
               <h2>{entry.recipient.fullName}</h2>
             ) : null}
             <Accordion
@@ -203,27 +203,27 @@ function BloodDonationEntry() {
                   }}
                 >
                   {recipientId.length < 15 ? (
-                    <h4 style={{ margin: "0" }}>{entry.recipient.fullName}</h4>
+                    <h3 style={{ margin: "0" }}>{entry.recipient.fullName}</h3>
                   ) : (
                     <h4 style={{ margin: 0 }}>
                       Units Donated: {entry.unitsDonated}
                     </h4>
                   )}
 
-                  <h5 style={{ margin: "0px" }}>
-                    Donated On:{entry.organisation.name}
-                  </h5>
+                  <h4 style={{ margin: "0px" }}>
+                    Donated On: {entry.organisation.name}
+                  </h4>
                 </div>
               </AccordionSummary>
               <AccordionDetails
-                sx={{ display: "flex", flexDirection: "column", gap: "15px" }}
+                sx={{ display: "flex", flexDirection: "column", gap: "19px" }}
               >
                 {recipientId.length < 15 ? (
-                  <h5 style={{ margin: 0 }}>
-                    Units Donated:{entry.unitsDonated}
-                  </h5>
+                  <h4 style={{ margin: 0 }}>
+                    Units Donated: {entry.unitsDonated}
+                  </h4>
                 ) : null}
-                <h5 style={{ margin: 0 }}>Donated On:{entry.donatedOn}</h5>
+                <h4 style={{ margin: 0 }}>Donated On: {entry.donatedOn}</h4>
 
                 {entry.formImage ? (
                   <div

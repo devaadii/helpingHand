@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import Header from "../components/Header";
-import { TextField, Button } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  InputAdornment,
+} from "@mui/material";
 import axiosInstance from "../axios/axios";
 import { Link, useNavigate } from "react-router-dom";
 import authContext from "../contexts/authContext";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 function Register() {
   const [fullName, setFullName] = useState("");
-  const [mobileNumber, setMobileNummber] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { auth, setAuth } = useContext(authContext);
   const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
@@ -25,6 +30,9 @@ function Register() {
   }, [navigate, setAuth]);
 
   const handleClick = () => {
+    if (!validateForm()) {
+      return;
+    }
     axiosInstance
       .post("/users/", {
         fullName,
@@ -46,8 +54,17 @@ function Register() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
+  };
+
+  const isMobileNumberValid = mobileNumber.length === 10;
+
+  const validateForm = () => {
+    if (!isMobileNumberValid) {
+      setErrMessage("Mobile number must be 10 digits");
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -70,13 +87,9 @@ function Register() {
             variant="outlined"
             margin="normal"
             value={fullName}
-            onChange={(e) => {
-              setFullName(e.target.value);
-            }}
+            onChange={(e) => setFullName(e.target.value)}
             InputLabelProps={{
-              style: {
-                color: "#737373",
-              },
+              style: { color: "#737373" },
             }}
             sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
           />
@@ -88,13 +101,15 @@ function Register() {
             variant="outlined"
             margin="normal"
             value={mobileNumber}
-            onChange={(e) => {
-              setMobileNummber(e.target.value);
-            }}
+            onChange={(e) => setMobileNumber(e.target.value)}
+            error={!!mobileNumber && !isMobileNumberValid}
+            helperText={
+              !!mobileNumber && !isMobileNumberValid
+                ? "Mobile number must be 10 digits"
+                : ""
+            }
             InputLabelProps={{
-              style: {
-                color: "#737373",
-              },
+              style: { color: "#737373" },
             }}
             sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
           />
@@ -103,19 +118,26 @@ function Register() {
             id="password"
             label="Password"
             variant="outlined"
-            type="password"
+            type={showPassword ? "text" : "password"}
             margin="normal"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
+            onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <RemoveRedEyeIcon
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </InputAdornment>
+              ),
             }}
             InputLabelProps={{
-              style: {
-                color: "#737373",
-              },
+              style: { color: "#737373" },
             }}
             sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
           />
+
           <Button
             className="login-button"
             variant="contained"
@@ -127,7 +149,7 @@ function Register() {
           </Button>
         </form>
         <p>
-          already have an Account , <Link to="/Login">login</Link>
+          Already have an account? <Link to="/Login">Login</Link>
         </p>
         {errMessage && (
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
