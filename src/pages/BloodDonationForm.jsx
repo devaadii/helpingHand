@@ -290,7 +290,9 @@ function BloodDonationForm() {
           }}
           onSubmit={handleFormSubmit}
         >
-          <h2 style={{ marginBottom: "40px" }}>Blood Donation Form</h2>
+          <h2 style={{ marginBottom: "40px", textAlign: "center" }}>
+            Blood Donation Form
+          </h2>
           <Accordion
             elevation={0}
             expanded={expanded && !selectedRecipient}

@@ -42,8 +42,11 @@ a {
 }
 
 #icon {
-  width: 3vw;
+  width: 4vw;
 }
 #icon1 {
-  width: 4vw;
+  width: 5vw;
+}
+.svg_icons {
+  transform: scale(1.3);
 }

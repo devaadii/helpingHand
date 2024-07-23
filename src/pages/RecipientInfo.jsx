@@ -105,7 +105,8 @@ function RecipientInfo() {
         <h3
           style={{
             fontSize: "25px",
-            width: "50vw",
+            padding: "0 2px",
+            margin: "30px auto",
             fontStyle: "italic",
             fontWeight: "900",
           }}
@@ -129,7 +130,7 @@ function RecipientInfo() {
           )}
         />
       </div>
-      <hr />
+      <hr style={{ margin: 0 }} />
       <ul
         style={{
           listStyle: "none",
@@ -140,28 +141,40 @@ function RecipientInfo() {
           <li key={recipient._id}>
             <Accordion
               elevation={5}
+              square="false"
               sx={{
-                padding: "10px 0px",
+                padding: "0px 2px",
                 margin: "20px auto",
-                backgroundColor: "#FEF9F9",
+
+                border: "0.5px solid grey",
+
+                borderRadius: "20px",
               }}
               expanded={expanded === recipient._id}
             >
               <AccordionSummary
                 onClick={() => handleAccordionToggle(recipient._id)}
                 sx={{
+                  height: "10vh",
                   width: "100%",
+
                   "& .MuiAccordionSummary-content": {
                     margin: 0,
                     display: "flex",
                     alignItems: "center",
                   },
                 }}
-                expandIcon={<ExpandMore />}
+                expandIcon={<ExpandMore className="svg_icons" />}
               >
-                <div style={{ width: "50vw" }}>
-                  <h3 style={{ margin: "3px" }}>Name: {recipient.fullName}</h3>
-                  <h4 style={{ margin: "3px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "15px",
+                  }}
+                >
+                  <h3 style={{ margin: "0px" }}>Name: {recipient.fullName}</h3>
+                  <h4 style={{ margin: "0px" }}>
                     Number: {recipient.mobileNumber}
                   </h4>
                 </div>
@@ -223,9 +236,21 @@ function RecipientInfo() {
                   </IconButton>
                 </div>
               </AccordionSummary>
-              <AccordionDetails>
-                <h4>About: {recipient.about || "No Information"}</h4>
-                <h4>Address: {recipient.address || "No Information"}</h4>
+              <AccordionDetails
+                sx={{
+                  margin: "0",
+                  paddingTop: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                <h4 style={{ margin: 0 }}>
+                  About: {recipient.about || "No Information"}
+                </h4>
+                <h4 style={{ margin: 0 }}>
+                  Address: {recipient.address || "No Information"}
+                </h4>
               </AccordionDetails>
             </Accordion>
           </li>
