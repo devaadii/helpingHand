@@ -64,3 +64,12 @@ h3 {
   font-size: smaller;
   font-weight: 600;
 }
+.login-button {
+  width: 70vw;
+}
+
+@media (min-width: 1024px) {
+  .login-button {
+    width: 10vw;
+  }
+}

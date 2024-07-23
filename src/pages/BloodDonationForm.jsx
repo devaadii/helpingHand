@@ -333,10 +333,23 @@ function BloodDonationForm() {
                 onInputChange={(e, newInputValue) => {
                   fetchOptions(newInputValue);
                 }}
-                sx={{ width: "70vw" }}
+                sx={{
+                  width: "70vw",
+                  "@media (min-width: 1024px)": {
+                    width: "30vw",
+                    alignContent: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                  },
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    sx={{
+                      "@media (min-width: 1024px)": {
+                        width: "30vw",
+                      },
+                    }}
                     label="Enter Recipient's Number"
                     variant="outlined"
                     value={
@@ -363,7 +376,12 @@ function BloodDonationForm() {
                     ? selectedRecipient.fullName
                     : customRecipientName
                 }
-                sx={{ width: "70vw" }}
+                sx={{
+                  width: "70vw",
+                  "@media (min-width: 1024px)": {
+                    width: "30vw",
+                  },
+                }}
                 onChange={(e) => setCustomRecipientName(e.target.value)}
               />
             </AccordionDetails>
@@ -371,7 +389,12 @@ function BloodDonationForm() {
               <TextField
                 label="Enter Recipient's Details"
                 value={about}
-                sx={{ width: "70vw" }}
+                sx={{
+                  width: "70vw",
+                  "@media (min-width: 1024px)": {
+                    width: "30vw",
+                  },
+                }}
                 onChange={(e) => setAbout(e.target.value)}
               />
             </AccordionDetails>
@@ -380,14 +403,24 @@ function BloodDonationForm() {
               <TextField
                 label="Enter Recipient's Address"
                 value={address}
-                sx={{ width: "70vw" }}
+                sx={{
+                  width: "70vw",
+                  "@media (min-width: 1024px)": {
+                    width: "30vw",
+                  },
+                }}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </AccordionDetails>
           </Accordion>
 
           <TextField
-            sx={{ width: "70vw" }}
+            sx={{
+              width: "70vw",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
             label="Donated On"
             type="date"
             value={donatedOn}
@@ -398,7 +431,12 @@ function BloodDonationForm() {
             }}
           />
           <TextField
-            sx={{ width: "70vw" }}
+            sx={{
+              width: "70vw",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
             label="Units Donated"
             type="number"
             value={unitsDonated}
@@ -426,7 +464,12 @@ function BloodDonationForm() {
             onInputChange={(e, newValue) => {
               fetchOrganisation(newValue);
             }}
-            sx={{ width: "70vw" }}
+            sx={{
+              width: "70vw",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -447,7 +490,12 @@ function BloodDonationForm() {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            sx={{ width: "70vw" }}
+            sx={{
+              width: "70vw",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
             margin="normal"
             key={render}
           />
@@ -528,7 +576,7 @@ function BloodDonationForm() {
             className="login-button"
             style={{
               marginTop: "40px",
-              width: "70vw",
+
               backgroundColor: "#C42421",
             }}
           >

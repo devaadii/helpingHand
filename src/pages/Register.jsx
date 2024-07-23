@@ -91,7 +91,13 @@ function Register() {
             InputLabelProps={{
               style: { color: "#737373" },
             }}
-            sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
+            sx={{
+              width: "70vw",
+              backgroundColor: "#FEF9F9",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
           />
 
           <TextField
@@ -111,7 +117,13 @@ function Register() {
             InputLabelProps={{
               style: { color: "#737373" },
             }}
-            sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
+            sx={{
+              width: "70vw",
+              backgroundColor: "#FEF9F9",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
           />
 
           <TextField
@@ -135,7 +147,13 @@ function Register() {
             InputLabelProps={{
               style: { color: "#737373" },
             }}
-            sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
+            sx={{
+              width: "70vw",
+              backgroundColor: "#FEF9F9",
+              "@media (min-width: 1024px)": {
+                width: "30vw",
+              },
+            }}
           />
 
           <Button

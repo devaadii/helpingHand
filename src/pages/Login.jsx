@@ -68,7 +68,7 @@ function Login() {
           }}
         >
           <h2>Login</h2>
-          <div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <TextField
               id="mobileNumber"
               label="Mobile Number"
@@ -82,7 +82,13 @@ function Login() {
                 },
               }}
               onChange={(e) => setMobileNumber(e.target.value)}
-              sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
+              sx={{
+                width: "70vw",
+                backgroundColor: "#FEF9F9",
+                "@media (min-width: 1024px)": {
+                  width: "30vw",
+                },
+              }}
             />
             <TextField
               id="password"
@@ -97,7 +103,13 @@ function Login() {
                 },
               }}
               onChange={(e) => setPassword(e.target.value)}
-              sx={{ width: "60vw", backgroundColor: "#FEF9F9" }}
+              sx={{
+                width: "70vw",
+                backgroundColor: "#FEF9F9",
+                "@media (min-width: 1024px)": {
+                  width: "30vw",
+                },
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

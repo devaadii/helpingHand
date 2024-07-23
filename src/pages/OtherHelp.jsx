@@ -50,6 +50,9 @@ function OtherHelp() {
           width: "60vw",
           border: "1px solid black",
           marginTop: "15px",
+          "@media (min-width: 1024px)": {
+            width: "20vw",
+          },
         }}
         src={memeUrl}
       />
