@@ -1,13 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
 .reg-id {
-  margin: 0 auto;
+  margin: 40px auto;
   width: 70vw;
   text-align: center;
   height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 .login-button {
   background-color: #c42421;
@@ -56,13 +58,10 @@ h4 {
 }
 h3 {
   font-family: "Montserrat", sans-serif;
-
-  font-weight: 600;
 }
 .form > h3 {
   font-family: "Montserrat", sans-serif;
   font-size: smaller;
-  font-weight: 600;
 }
 .login-button {
   width: 70vw;
@@ -72,4 +71,16 @@ h3 {
   .login-button {
     width: 10vw;
   }
+}
+.name-h3 {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.curve {
+  width: 100%;
+  height: 40vw;
+  background-color: white;
+  border-bottom-left-radius: 50% 20px;
+  border-bottom-right-radius: -50% 20px;
 }

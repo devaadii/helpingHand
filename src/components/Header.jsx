@@ -8,9 +8,11 @@ import AppBar from "@mui/material/AppBar";
 import toggler from "../icons/image.png";
 import { Height } from "@mui/icons-material";
 import { Link, NavLink } from "react-router-dom";
+import BookIcon from "@mui/icons-material/Book";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const auth = localStorage.getItem("authData");
+  const auth = localStorage.getItem("token");
 
   const handleClick = (event) => {
     if (auth) {
@@ -55,29 +57,45 @@ function Header() {
               horizontal: "left",
             }}
           >
-            <Box sx={{ p: 4 }}>
-              <Typography>Choose Where you want to go</Typography>
-              <div style={{ marginTop: "20px" }}>
-                <NavLink
-                  style={{
-                    margin: "5px",
-                    color: "#4285F4",
-                    textDecoration: "none",
-                  }}
-                  to="/recipient-info"
-                >
-                  Recipient Info
-                </NavLink>
-                <NavLink
-                  style={{
-                    margin: "5px",
-                    color: "#4285F4",
-                    textDecoration: "none",
-                  }}
-                  to="/BloodDonation-entries/:recipientId"
-                >
-                  Blood Donation Entry
-                </NavLink>
+            <Box sx={{ p: 4, border: "1px solid black" }}>
+              <Typography variant="h6">Choose Where you want to go?</Typography>
+              <hr />
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+
+                  gap: "20px",
+                }}
+              >
+                {" "}
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <BookIcon />
+                  <NavLink
+                    style={{
+                      margin: "5px",
+                      color: "black",
+                      textDecoration: "none",
+                    }}
+                    to="/recipient-info"
+                  >
+                    Recipient Info
+                  </NavLink>
+                </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <EditNoteIcon />
+                  <NavLink
+                    style={{
+                      margin: "5px",
+                      color: "black",
+                      textDecoration: "none",
+                    }}
+                    to="/BloodDonation-entries/"
+                  >
+                    Blood Donation Entry
+                  </NavLink>
+                </div>
               </div>
             </Box>
           </Popover>

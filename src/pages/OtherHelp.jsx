@@ -14,7 +14,7 @@ function OtherHelp() {
       setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
     }, 1000);
     setTimeout(() => {
-      navigate("/Blood-Donation-Form");
+      navigate("/Blood-Donation");
     }, [10000]);
 
     return () => clearInterval(intervalId);

@@ -13,30 +13,32 @@ import Protected from "./pages/Protected";
 import authContext from "./contexts/authContext";
 import RecipientInfo from "./pages/RecipientInfo";
 import BloodDonationEntry from "./pages/BloodDonationEntry";
+import Fourzerofour from "./pages/Fourzerofour";
 
 function App() {
   const [count, setCount] = useState(0);
   const { auth, setAuth } = useContext(authContext);
   useEffect(() => {
-    const authData = localStorage.getItem("authData");
+    const authData = localStorage.getItem("token");
     if (authData) {
       setAuth(authData);
     }
-  }, [setAuth]);
+  }, []);
 
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route element={<Protected />}>
-            <Route
-              path="/Blood-Donation-Form"
-              element={<BloodDonationForm />}
-            />
+            <Route path="/Blood-Donation" element={<BloodDonationForm />} />
 
             <Route path="/Other-Help" element={<OtherHelp />} />
 
             <Route path="/recipient-info" element={<RecipientInfo />} />
+            <Route
+              path="/BloodDonation-entries/"
+              element={<BloodDonationEntry />}
+            />
             <Route
               path="/BloodDonation-entries/:recipientId"
               element={<BloodDonationEntry />}
@@ -44,6 +46,7 @@ function App() {
           </Route>
           <Route path="/" element={<Register />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/*" element={<Fourzerofour />} />
         </Routes>
       </BrowserRouter>
     </>

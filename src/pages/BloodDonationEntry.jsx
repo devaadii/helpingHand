@@ -9,12 +9,15 @@ import {
   IconButton,
   Popover,
   Typography,
+  Divider,
 } from "@mui/material";
 import Header from "../components/Header";
 import BottomNav from "../components/BottomNav";
 import { useParams } from "react-router-dom";
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandMore, LocationOn } from "@mui/icons-material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import background from "./images/v915-techi-055-a.jpg";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 function BloodDonationEntry() {
   const [entries, setEntries] = useState([]);
@@ -23,6 +26,8 @@ function BloodDonationEntry() {
   const [endDate, setEndDate] = useState(null);
   const { recipientId } = useParams();
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  console.log("recipientId: ", recipientId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,13 +39,9 @@ function BloodDonationEntry() {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-  useEffect(() => {
-    if (startDate || endDate) {
-    }
-  }, [setStartDate, setEndDate]);
 
   useEffect(() => {
-    if (recipientId.length > 15) {
+    if (recipientId?.length > 15) {
       (async () => {
         const res = await axiosInstance.get(
           `/blood-donation?recipient=${recipientId}&startDate&endDate&minUnitsDonated=0&maxUnitsDonated`
@@ -109,15 +110,9 @@ function BloodDonationEntry() {
           justifyContent: "space-between",
         }}
       >
-        <h3
-          style={{
-            fontSize: "22px",
-            padding: "0 2px",
-            fontStyle: "italic",
-          }}
-        >
+        <Typography variant="h6" fontWeight={600} sx={{ py: 2, ml: 1.5 }}>
           Blood Donation Entries
-        </h3>
+        </Typography>
         {/* <div style={{ display: "flex" }}> */}
 
         <IconButton
@@ -159,103 +154,87 @@ function BloodDonationEntry() {
 
         {/* </div> */}
       </div>
-      <hr style={{ margin: 0 }}></hr>
+      <Divider variant="middle" />
 
-      <ul
+      {/* <ul
         style={{
           listStyle: "none",
           display: "contents",
         }}
-      >
-        {entries.map((entry, index) => (
-          <li key={entry._id}>
-            {(index === 0) & (recipientId.length > 15) ? (
+      > */}
+      {entries.map((entry, index) => {
+        return (
+          <>
+            {(index === 0) & (recipientId?.length > 15) ? (
               <h2>{entry.recipient.fullName}</h2>
             ) : null}
-            <Accordion
-              elevation={5}
-              square="false"
-              sx={{
-                border: "0.5px solid grey",
-                borderRadius: "20px",
-                padding: "10px 0px",
-                margin: "20px auto",
-              }}
-            >
+            <Accordion elevation={5} sx={{ my: 2 }} key={entry._id}>
               <AccordionSummary
-                sx={{
-                  height: "10vh",
-                  paddingTop: 0,
-                  width: "100%",
-                  "& .MuiAccordionSummary-content": {
-                    display: "flex",
-                    margin: "0",
-                    alignItems: "center",
-                  },
-                }}
                 expandIcon={<ExpandMore className="svg_icons" />}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "20px",
-                  }}
-                >
-                  {recipientId.length < 15 ? (
-                    <h3 style={{ margin: "0" }}>{entry.recipient.fullName}</h3>
+                <div>
+                  {recipientId?.length < 15 ? (
+                    <Typography variant="h6" mb={0.5}>
+                      {entry.recipient.fullName}
+                    </Typography>
                   ) : (
                     <h4 style={{ margin: 0 }}>
                       Units Donated: {entry.unitsDonated}
                     </h4>
                   )}
 
-                  <h4 style={{ margin: "0px" }}>
-                    Donated On: {entry.organisation.name}
-                  </h4>
+                  <Typography
+                    fontSize="0.8rem"
+                    color="grey"
+                    sx={{ display: "flex", alignItems: "center", gap: 0.3 }}
+                  >
+                    <LocationOn fontSize="0.8rem" />{" "}
+                    {entry.organisation.name.toUpperCase()}
+                  </Typography>
                 </div>
               </AccordionSummary>
-              <AccordionDetails
-                sx={{ display: "flex", flexDirection: "column", gap: "19px" }}
-              >
-                {recipientId.length < 15 ? (
+              <AccordionDetails sx={{}}>
+                {recipientId?.length < 15 ? (
                   <h4 style={{ margin: 0 }}>
                     Units Donated: {entry.unitsDonated}
                   </h4>
                 ) : null}
-                <h4 style={{ margin: 0 }}>Donated On: {entry.donatedOn}</h4>
+                <Typography
+                  fontSize="0.8rem"
+                  color="grey"
+                  style={{
+                    margin: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  <CalendarTodayIcon sx={{ fontSize: "1rem" }} />{" "}
+                  {entry.donatedOn}
+                </Typography>
 
-                {entry.formImage ? (
+                {entry.formImage && (
                   <div
                     style={{
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-around",
+                      margin: "20px",
                     }}
                   >
-                    <img
-                      style={{ width: "40vw", border: "1px solid #AB6B69" }}
-                      src={entry.formImage}
-                      alt="No Form Image Available"
-                    />
-                    <a href="{entry.formImage}" download="filename.jpg">
-                      <Button
-                        size="small"
-                        sx={{
-                          color: "black",
-                          border: "0.1px solid black",
-                        }}
-                      >
-                        Download Image
-                      </Button>
+                    <a href={entry.formImage} download>
+                      <img
+                        style={{ width: "40vw" }}
+                        src={entry.formImage}
+                        alt="No Form Image Available"
+                      />
                     </a>
                   </div>
-                ) : null}
+                )}
               </AccordionDetails>
             </Accordion>
-          </li>
-        ))}
-      </ul>
+          </>
+        );
+      })}
+      {/* </ul> */}
 
       <BottomNav />
     </div>

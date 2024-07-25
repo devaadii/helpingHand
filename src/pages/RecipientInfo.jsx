@@ -13,6 +13,8 @@ import {
   Button,
   Box,
   Popper,
+  Typography,
+  Divider,
 } from "@mui/material";
 import Header from "../components/Header";
 import BottomNav from "../components/BottomNav";
@@ -32,7 +34,6 @@ function RecipientInfo() {
   const navigate = useNavigate();
 
   const handleInfoClick = (recipientId) => {
-    console.log("clicked");
     navigate(`/BloodDonation-entries/${recipientId}`);
   };
 
@@ -103,16 +104,9 @@ function RecipientInfo() {
           justifyContent: "space-between",
         }}
       >
-        <h3
-          style={{
-            fontSize: "20px",
-            padding: "0 2px",
-            marginTop: "30px",
-            fontStyle: "italic",
-          }}
-        >
+        <Typography variant="h6" sx={{ my: 2 }} className="name-h3">
           Recipient's Information
-        </h3>
+        </Typography>
         <Autocomplete
           freeSolo
           id="recipients"
@@ -130,7 +124,7 @@ function RecipientInfo() {
           )}
         />
       </div>
-      <hr style={{ margin: 0 }} />
+      <Divider />
       <ul
         style={{
           listStyle: "none",
@@ -140,43 +134,30 @@ function RecipientInfo() {
         {recipients.map((recipient) => (
           <li key={recipient._id}>
             <Accordion
+              sx={{ my: 2 }}
               elevation={5}
-              square="false"
-              sx={{
-                padding: "6px 2px",
-                margin: "20px auto",
-
-                border: "0.5px solid grey",
-
-                borderRadius: "20px",
-              }}
               expanded={expanded === recipient._id}
             >
               <AccordionSummary
                 onClick={() => handleAccordionToggle(recipient._id)}
-                sx={{
-                  height: "10vh",
-                  width: "100%",
-
-                  "& .MuiAccordionSummary-content": {
-                    margin: 0,
-                    display: "flex",
-                    alignItems: "center",
-                  },
-                }}
+                elevation={5}
                 expandIcon={<ExpandMore className="svg_icons" />}
               >
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "15px",
                   }}
                 >
-                  <h3 style={{ margin: "0px" }}>Name: {recipient.fullName}</h3>
-                  <h4 style={{ margin: "0px" }}>
-                    Number: {recipient.mobileNumber}
-                  </h4>
+                  <Typography
+                    variant="subtitle2"
+                    style={{ fontWeight: "500", fontSize: "17px" }}
+                  >
+                    {recipient.fullName}
+                  </Typography>
+                  <Typography variant="string" sx={{ fontSize: "0.85rem" }}>
+                    {recipient.mobileNumber}
+                  </Typography>
                 </div>
                 <div
                   style={{
@@ -237,20 +218,14 @@ function RecipientInfo() {
                 </div>
               </AccordionSummary>
               <AccordionDetails
-                sx={{
-                  margin: "0",
-                  paddingTop: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
+                sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
               >
-                <h4 style={{ margin: 0 }}>
+                <Typography variant="string" style={{}}>
                   About: {recipient.about || "No Information"}
-                </h4>
-                <h4 style={{ margin: 0 }}>
+                </Typography>
+                <Typography variant="string" style={{ margin: 0 }}>
                   Address: {recipient.address || "No Information"}
-                </h4>
+                </Typography>
               </AccordionDetails>
             </Accordion>
           </li>

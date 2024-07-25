@@ -11,12 +11,13 @@ import { fetchRecipients, fetchId } from "../api/recipients";
 import { fetchOrg, fetchOrgId } from "../api/organisation";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
+import backgroundImage from "./images/v915-techi-055-a.jpg";
 import "react-image-crop/dist/ReactCrop.css";
 import { useRef } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { drawImageOnCanvas, generateDownload } from "../components/utils";
+import quote from "./images/download.jpeg";
 import {
   Dialog,
   DialogActions,
@@ -36,7 +37,7 @@ function BloodDonationForm() {
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [render, setRender] = useState(true);
-
+  const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errMessage, setErrMessage] = useState("");
@@ -57,23 +58,29 @@ function BloodDonationForm() {
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
   const validateForm = () => {
-    if (customRecipientNumber.length !== 10) {
+    if (!selectedRecipient && customRecipientNumber.length !== 10) {
       setErrMessage("Mobile number must be 10 digits");
       return false;
     }
+
+    if (selectedRecipient && selectedRecipient.mobileNumber.length !== 10) {
+      setErrMessage("Recipient's mobile number must be 10 digits");
+      return false;
+    }
+
     if (unitsDonated <= 0) {
       setErrMessage("Units donated must be a positive number");
       return false;
     }
+
     return true;
   };
-  const isMobileNumberValid = customRecipientNumber.length === 10;
-  const isUnitsDonatedValid = unitsDonated > 0;
+  const isMobileNumberValid =
+    customRecipientNumber.length === 10 ||
+    selectedRecipient?.mobileNumber?.length === 10;
 
+  const isUnitsDonatedValid = unitsDonated > 0;
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -181,13 +188,13 @@ function BloodDonationForm() {
       }
     }
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSuccessMessage("");
-      setErrMessage("");
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [successMessage, errMessage]);
+  // ect(() => {
+  //   const timer = setTimeout(() => {
+  //     setSuccessMessage("");
+  //     setErrMessage("");
+  //   }, 3000);
+  //   return () => clearTimeout(timer);
+  // }, [successMessage, errMessage]);
 
   const getOrganisationId = async () => {
     if (selectedOrganisation) {
@@ -197,6 +204,11 @@ function BloodDonationForm() {
       return data;
     }
   };
+  useEffect(() => {
+    if (successMessage || errMessage) {
+      setOpen(true);
+    }
+  }, [successMessage, errMessage]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -268,13 +280,13 @@ function BloodDonationForm() {
   return (
     <div
       style={{
-        height: "110vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
       }}
     >
       <Header />
+      <img src={quote} style={{ width: "100vw", height: "15vh" }} />
 
       <div>
         <form
@@ -283,7 +295,7 @@ function BloodDonationForm() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            margin: "60px auto",
+            padding: "20px",
           }}
           onSubmit={handleFormSubmit}
         >
@@ -557,7 +569,7 @@ function BloodDonationForm() {
               </Alert>
             </Snackbar>
           )}
-          {errMessage && (
+          {!!errMessage && (
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert
                 onClose={handleClose}

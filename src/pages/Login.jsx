@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import Header from "../components/Header";
 import axiosInstance from "../axios/axios";
@@ -11,6 +11,8 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import image from "./images/images.jpeg";
+import backgroundImage from "./images/v915-techi-055-a.jpg";
 
 function Login() {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -30,11 +32,11 @@ function Login() {
   };
 
   useEffect(() => {
-    const storedAuth = localStorage.getItem("authData");
-    if (storedAuth) {
-      navigate("/Blood-Donation-Form");
+    if (localStorage.getItem("authData")) {
+      navigate("/Blood-Donation");
     }
-  }, []);
+  }, [navigate]);
+
   const handleClick = () => {
     axiosInstance
       .post("/users/login", {
@@ -44,8 +46,10 @@ function Login() {
       .then((response) => {
         console.log(response);
         localStorage.setItem("token", response.data.data.accessToken);
+        setAuth(JSON.stringify(response.data.data));
         const authData = localStorage.setItem("authData", response.data.data);
-        navigate("/Blood-Donation-Form");
+
+        navigate("/Blood-Donation");
       })
       .catch((error) => {
         console.log(error);
@@ -55,20 +59,31 @@ function Login() {
   };
 
   return (
-    <>
+    <div
+      style={{
+        height: "100vh",
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+      }}
+    >
       {" "}
-      <Header />
+      <div
+        className="curve"
+        style={{ background: `url(${image})`, backgroundSize: "cover" }}
+      ></div>
       <div className="reg-id">
         <form
           style={{
             display: "flex",
             flexDirection: "column",
             height: "60vh",
-            justifyContent: "space-around",
+
+            justifyContent: "flex-start",
             alignItems: "center",
+            gap: "20px",
           }}
         >
-          <h2>Login</h2>
+          <h2 style={{ fontSize: "30px", margin: " 0" }}>Login</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <TextField
               id="mobileNumber"
@@ -140,11 +155,11 @@ function Login() {
           >
             Login
           </Button>
-        </form>
-        <div>
           <p>
             Don't have an Account? <Link to="/">sign up</Link>
           </p>
+        </form>
+        <div>
           {errMessage && (
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert
@@ -159,7 +174,7 @@ function Login() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
