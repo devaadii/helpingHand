@@ -36,7 +36,7 @@ function App() {
 
             <Route path="/recipient-info" element={<RecipientInfo />} />
             <Route
-              path="/BloodDonation-entries/"
+              path="/BloodDonation-entries"
               element={<BloodDonationEntry />}
             />
             <Route
@@ -46,6 +46,7 @@ function App() {
           </Route>
           <Route path="/" element={<Register />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/Login/:userCreated" element={<Login />} />
           <Route path="/*" element={<Fourzerofour />} />
         </Routes>
       </BrowserRouter>

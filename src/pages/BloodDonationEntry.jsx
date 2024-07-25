@@ -10,6 +10,7 @@ import {
   Popover,
   Typography,
   Divider,
+  TextField,
 } from "@mui/material";
 import Header from "../components/Header";
 import BottomNav from "../components/BottomNav";
@@ -88,14 +89,38 @@ function BloodDonationEntry() {
   // };
 
   const filterEntries = async () => {
-    const response = await axiosInstance.get(
-      `blood-donation?recipient&startDate=${startDate}&endDate=${endDate}&minUnitsDonated=0&maxUnitsDonated`
-    );
-    try {
-      console.log(response.data.data);
-      setEntries(response.data.data.entries);
-    } catch (err) {
-      console.log(err);
+    if (startDate && endDate) {
+      const response = await axiosInstance.get(
+        `blood-donation?recipient&startDate=${startDate}&endDate=${endDate}&minUnitsDonated=0&maxUnitsDonated`
+      );
+      try {
+        console.log(response.data.data);
+        setEntries(response.data.data.entries);
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (startDate) {
+      const response = await axiosInstance.get(
+        `blood-donation?recipient&startDate=${startDate}&endDate&minUnitsDonated=0&maxUnitsDonated`
+      );
+      try {
+        console.log(response.data.data);
+        setEntries(response.data.data.entries);
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (endDate) {
+      const response = await axiosInstance.get(
+        `blood-donation?recipient&startDate=${startDate}&endDate&minUnitsDonated=0&maxUnitsDonated`
+      );
+      try {
+        console.log(response.data.data);
+        setEntries(response.data.data.entries);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("error");
     }
   };
 
@@ -134,20 +159,36 @@ function BloodDonationEntry() {
             horizontal: "left",
           }}
         >
-          <Typography sx={{ p: 2, display: "flex", border: "1px solid black" }}>
+          <Typography
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              border: "1px solid black",
+            }}
+          >
             {" "}
             <div>
-              <label htmlFor="start-date">Start Date </label>
-              <input
-                style={{ margin: "auto 5px" }}
+              <TextField
                 type="date"
+                label="Start-Date"
                 onChange={(e) => handleStartDate(e)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </div>
             <div>
               {" "}
-              <label htmlFor="end-date:">End Date</label>
-              <input type="date" onChange={(e) => handleEndDate(e)} />
+              <TextField
+                label="End-Date"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                type="date"
+                onChange={(e) => handleEndDate(e)}
+              />
             </div>
             <Button onClick={filterEntries}>Filter</Button>
           </Typography>
@@ -219,7 +260,13 @@ function BloodDonationEntry() {
                   }}
                 >
                   <CalendarTodayIcon sx={{ fontSize: "1rem" }} />{" "}
-                  {entry.donatedOn}
+                  {new Date(entry.donatedOn).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </Typography>
                 {!recipientId ? (
                   <Typography

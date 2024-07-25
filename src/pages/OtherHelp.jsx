@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function OtherHelp() {
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(5);
   const [memeUrl, setMemeUrl] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -15,37 +15,37 @@ function OtherHelp() {
     }, 1000);
     setTimeout(() => {
       navigate("/Blood-Donation");
-    }, [10000]);
+    }, [5000]);
 
     return () => clearInterval(intervalId);
   }, []);
-  useEffect(() => {
-    const fetchMeme = async () => {
-      const options = {
-        method: "GET",
-        url: "https://programming-memes-images.p.rapidapi.com/v1/memes",
-        headers: {
-          "x-rapidapi-key":
-            "2af4d3052dmshb9292bc673faddcp10e1acjsn7e50405f2e18",
-          "x-rapidapi-host": "programming-memes-images.p.rapidapi.com",
-        },
-      };
+  // useEffect(() => {
+  //   const fetchMeme = async () => {
+  //     const options = {
+  //       method: "GET",
+  //       url: "https://programming-memes-images.p.rapidapi.com/v1/memes",
+  //       headers: {
+  //         "x-rapidapi-key":
+  //           "2af4d3052dmshb9292bc673faddcp10e1acjsn7e50405f2e18",
+  //         "x-rapidapi-host": "programming-memes-images.p.rapidapi.com",
+  //       },
+  //     };
 
-      try {
-        const response = await axios.request(options);
-        const randomIndex = Math.floor(Math.random() * response.data.length);
-        setMemeUrl(response.data[randomIndex].image);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //     try {
+  //       const response = await axios.request(options);
+  //       const randomIndex = Math.floor(Math.random() * response.data.length);
+  //       setMemeUrl(response.data[randomIndex].image);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchMeme();
-  }, []);
+  //   fetchMeme();
+  // }, []);
   return (
     <div style={{ textAlign: "center" }}>
       <Header />
-      <img
+      {/* <img
         style={{
           width: "60vw",
           border: "1px solid black",
@@ -55,7 +55,7 @@ function OtherHelp() {
           },
         }}
         src={memeUrl}
-      />
+      /> */}
       <div
         style={{
           display: "flex",

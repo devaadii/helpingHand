@@ -23,6 +23,13 @@ function Login() {
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("authData")) {
+      navigate("/Blood-Donation");
+      console.log("called");
+    }
+  }, []);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -30,12 +37,6 @@ function Login() {
 
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (localStorage.getItem("authData")) {
-      navigate("/Blood-Donation");
-    }
-  }, [navigate]);
 
   const handleClick = () => {
     axiosInstance
@@ -48,7 +49,6 @@ function Login() {
         localStorage.setItem("token", response.data.data.accessToken);
         setAuth(JSON.stringify(response.data.data));
         const authData = localStorage.setItem("authData", response.data.data);
-
         navigate("/Blood-Donation");
       })
       .catch((error) => {
@@ -76,7 +76,6 @@ function Login() {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "60vh",
 
             justifyContent: "flex-start",
             alignItems: "center",

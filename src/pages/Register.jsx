@@ -23,7 +23,7 @@ function Register() {
   const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
+  const [successMessage, setSuccessMessage] = useState("");
   useEffect(() => {
     const storedAuth = localStorage.getItem("token");
     if (storedAuth) {
@@ -38,7 +38,9 @@ function Register() {
     axiosInstance
       .post("/users/", { fullName, mobileNumber, password })
       .then((response) => {
-        navigate("/Login");
+        setTimeout(() => {
+          navigate("/Login");
+        }, 3000);
       })
       .catch((error) => {
         setErrMessage(error.response?.data?.message || "An error occurred");
@@ -66,6 +68,7 @@ function Register() {
   return (
     <div
       style={{
+        height: "100vh",
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
       }}
@@ -183,6 +186,19 @@ function Register() {
               sx={{ width: "100%" }}
             >
               {errMessage}
+            </Alert>
+          </Snackbar>
+        )}
+
+        {successMessage && (
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              {successMessage}
             </Alert>
           </Snackbar>
         )}

@@ -3,6 +3,7 @@ import axiosInstance from "../axios/axios";
 import { fetchRecipients } from "../api/recipients";
 import { AdsClickRounded, ExpandMore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import NotesIcon from "@mui/icons-material/Notes";
 import {
   Autocomplete,
   Accordion,
@@ -20,7 +21,7 @@ import Header from "../components/Header";
 import BottomNav from "../components/BottomNav";
 import editIcon from "../icons/image copy.png";
 import infoIcon from "../icons/image copy 2.png";
-
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 function RecipientInfo() {
   const [recipients, setRecipients] = useState([]);
   const [options, setOptions] = useState([]);
@@ -147,11 +148,13 @@ function RecipientInfo() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
+                    gap: "1vw",
+                    justifyContent: "center",
                   }}
                 >
                   <Typography
                     variant="subtitle2"
-                    style={{ fontWeight: "500", fontSize: "17px" }}
+                    style={{ fontWeight: "500", fontSize: "1rem" }}
                   >
                     {recipient.fullName}
                   </Typography>
@@ -230,9 +233,13 @@ function RecipientInfo() {
                   style={{
                     fontSize: "0.9rem",
                     fontFamily: "Montserrat, sans-serif",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                   }}
                 >
-                  About: {recipient.about || "No Information"}
+                  <NotesIcon sx={{ fontSize: "0.9rem" }} />{" "}
+                  {recipient.about || "No Information"}
                 </Typography>
                 <Typography
                   color="grey"
@@ -240,9 +247,13 @@ function RecipientInfo() {
                   style={{
                     fontSize: "0.9rem",
                     fontFamily: "Montserrat, sans-serif",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
                   }}
                 >
-                  Address: {recipient.address || "No Information"}
+                  <LocationOnIcon sx={{ fontSize: "0.9rem" }} />
+                  {recipient.address || "No Information"}
                 </Typography>
               </AccordionDetails>
             </Accordion>

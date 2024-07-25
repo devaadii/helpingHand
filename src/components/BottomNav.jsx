@@ -7,7 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Paper } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import authContext from "../contexts/authContext";
-
+import EditNoteIcon from "@mui/icons-material/EditNote";
 function BottomNav() {
   const [value, setValue] = useState();
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ function BottomNav() {
   useEffect(() => {
     if (location.pathname === "/Blood-Donation") {
       setValue("Blood-Donation");
-    } else if (location.pathname === "/Other-Help") {
-      setValue("Other-Help");
+    } else if (location.pathname === "/BloodDonation-entries") {
+      setValue("BloodDonation-entries");
     } else if (location.pathname === "/3") {
       setValue("3");
     }
@@ -44,12 +44,29 @@ function BottomNav() {
           bottom: 0,
           left: 0,
           right: 0,
-          width: "100vw",
+          width: "100%",
           height: "8vh",
+
+          zIndex: 1300,
         }}
         elevation={3}
       >
         <BottomNavigation value={value} onChange={handleChange}>
+          <BottomNavigationAction
+            label="Blood Donation Entries"
+            value="BloodDonation-entries"
+            icon={<EditNoteIcon sx={{ fontSize: 30 }} />} // Increase icon size
+            sx={{
+              borderTop:
+                value === "BloodDonation-entries" ? "2px solid black" : "none",
+              "& .MuiSvgIcon-root": {
+                color: value === "BloodDonation-entries" ? "black" : "inherit",
+              },
+              "& .MuiBottomNavigationAction-label": {
+                color: value === "BloodDonation-entries" ? "black" : "inherit",
+              },
+            }}
+          />
           <BottomNavigationAction
             label="Blood Donation"
             value="Blood-Donation"
@@ -62,20 +79,6 @@ function BottomNav() {
               },
               "& .MuiBottomNavigationAction-label": {
                 color: value === "Blood-Donation" ? "black" : "inherit",
-              },
-            }}
-          />
-          <BottomNavigationAction
-            label="Other"
-            value="Other-Help"
-            icon={<HelpIcon />}
-            sx={{
-              borderTop: value === "Other-Help" ? "2px solid black" : "none",
-              "& .MuiSvgIcon-root": {
-                color: value === "Other-Help" ? "black" : "inherit",
-              },
-              "& .MuiBottomNavigationAction-label": {
-                color: value === "Other-Help" ? "black" : "inherit",
               },
             }}
           />

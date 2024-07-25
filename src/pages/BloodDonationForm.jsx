@@ -17,7 +17,7 @@ import { useRef } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { drawImageOnCanvas, generateDownload } from "../components/utils";
-import quote from "./images/download.jpeg";
+import quote from "./images/—Pngtree—blood donation of medical material_1136102 (1).png";
 import {
   Dialog,
   DialogActions,
@@ -54,9 +54,29 @@ function BloodDonationForm() {
   const [file, setFile] = useState(null); // State to hold the selected file
   const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
   const [completedCrop, setCompletedCrop] = useState(null);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSuccess(false);
+    setOpenError(false);
+  };
+  useEffect(() => {
+    if (successMessage) {
+      setOpenSuccess(true);
+
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const validateForm = () => {
     if (!selectedRecipient && customRecipientNumber.length !== 10) {
@@ -81,13 +101,18 @@ function BloodDonationForm() {
     selectedRecipient?.mobileNumber?.length === 10;
 
   const isUnitsDonatedValid = unitsDonated > 0;
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
 
-    setOpen(false);
-  };
+  useEffect(() => {
+    if (successMessage) {
+      setOpenSuccess(true);
+    }
+  }, [successMessage]);
+
+  useEffect(() => {
+    if (errMessage) {
+      setOpenError(true);
+    }
+  }, [errMessage]);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -283,12 +308,30 @@ function BloodDonationForm() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
+        margin: 0,
+        padding: 0,
       }}
     >
       <Header />
-      <img src={quote} style={{ width: "100vw", height: "15vh" }} />
+      <img
+        src={quote}
+        style={{
+          display: "block",
+          marginRight: "auto",
+          width: "30vw",
 
-      <div>
+          height: "auto",
+        }}
+      />
+
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          paddingBottom: "8vh",
+        }}
+      >
         <form
           style={{
             display: "flex",
@@ -296,6 +339,7 @@ function BloodDonationForm() {
             justifyContent: "center",
             alignItems: "center",
             padding: "20px",
+            flex: 1,
           }}
           onSubmit={handleFormSubmit}
         >
@@ -558,7 +602,12 @@ function BloodDonationForm() {
           /> */}
 
           {!!successMessage && (
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar
+              sx={{ marginBottom: "7vh" }}
+              open={openSuccess}
+              autoHideDuration={6000}
+              onClose={handleClose}
+            >
               <Alert
                 onClose={handleClose}
                 severity="success"
@@ -569,8 +618,15 @@ function BloodDonationForm() {
               </Alert>
             </Snackbar>
           )}
+
+          {/* Error Snackbar */}
           {!!errMessage && (
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar
+              sx={{ marginBottom: "7vh" }}
+              open={openError}
+              autoHideDuration={6000}
+              onClose={handleClose}
+            >
               <Alert
                 onClose={handleClose}
                 severity="error"
@@ -595,6 +651,7 @@ function BloodDonationForm() {
             {loading ? <p>loading </p> : <p>Submit</p>}
           </Button>
         </form>
+
         <BottomNav />
       </div>
     </div>

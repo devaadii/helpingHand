@@ -10,6 +10,7 @@ import { Height } from "@mui/icons-material";
 import { Link, NavLink } from "react-router-dom";
 import BookIcon from "@mui/icons-material/Book";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import HelpIcon from "@mui/icons-material/Help";
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const auth = localStorage.getItem("token");
@@ -84,16 +85,16 @@ function Header() {
                   </NavLink>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <EditNoteIcon />
+                  <HelpIcon />
                   <NavLink
                     style={{
                       margin: "5px",
                       color: "black",
                       textDecoration: "none",
                     }}
-                    to="/BloodDonation-entries/"
+                    to="/Other-help"
                   >
-                    Blood Donation Entry
+                    Other Help
                   </NavLink>
                 </div>
               </div>

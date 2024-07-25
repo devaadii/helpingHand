@@ -6,7 +6,7 @@
   margin: 40px auto;
   width: 70vw;
   text-align: center;
-  height: 80vh;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -71,6 +71,15 @@ h3 {
   .login-button {
     width: 10vw;
   }
+  #icon {
+    width: 2vw;
+  }
+  #icon1 {
+    width: 2.5vw;
+  }
+  .curve {
+    visibility: hidden;
+  }
 }
 .name-h3 {
   font-family: "IBM Plex Serif", serif;
@@ -79,7 +88,7 @@ h3 {
 }
 .curve {
   width: 100%;
-  height: 40vw;
+  height: 25vh;
   background-color: white;
   border-bottom-left-radius: 50% 20px;
   border-bottom-right-radius: -50% 20px;
