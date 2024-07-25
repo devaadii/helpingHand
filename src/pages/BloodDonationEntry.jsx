@@ -18,6 +18,7 @@ import { ExpandMore, LocationOn } from "@mui/icons-material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import background from "./images/v915-techi-055-a.jpg";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import PersonIcon from "@mui/icons-material/Person";
 
 function BloodDonationEntry() {
   const [entries, setEntries] = useState([]);
@@ -172,7 +173,13 @@ function BloodDonationEntry() {
               <AccordionSummary
                 expandIcon={<ExpandMore className="svg_icons" />}
               >
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
                   {recipientId?.length < 15 ? (
                     <Typography variant="h6" mb={0.5}>
                       {entry.recipient.fullName}
@@ -193,7 +200,9 @@ function BloodDonationEntry() {
                   </Typography>
                 </div>
               </AccordionSummary>
-              <AccordionDetails sx={{}}>
+              <AccordionDetails
+                sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              >
                 {recipientId?.length < 15 ? (
                   <h4 style={{ margin: 0 }}>
                     Units Donated: {entry.unitsDonated}
@@ -212,6 +221,21 @@ function BloodDonationEntry() {
                   <CalendarTodayIcon sx={{ fontSize: "1rem" }} />{" "}
                   {entry.donatedOn}
                 </Typography>
+                {!recipientId ? (
+                  <Typography
+                    fontSize="0.8rem"
+                    color="grey"
+                    style={{
+                      margin: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <PersonIcon sx={{ fontSize: "1rem" }} />{" "}
+                    {entry.recipient.fullName}
+                  </Typography>
+                ) : null}
 
                 {entry.formImage && (
                   <div

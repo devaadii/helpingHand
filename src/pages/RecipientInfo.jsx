@@ -155,7 +155,11 @@ function RecipientInfo() {
                   >
                     {recipient.fullName}
                   </Typography>
-                  <Typography variant="string" sx={{ fontSize: "0.85rem" }}>
+                  <Typography
+                    color="grey"
+                    variant="string"
+                    sx={{ fontSize: "0.85rem" }}
+                  >
                     {recipient.mobileNumber}
                   </Typography>
                 </div>
@@ -220,10 +224,24 @@ function RecipientInfo() {
               <AccordionDetails
                 sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
               >
-                <Typography variant="string" style={{}}>
+                <Typography
+                  color="grey"
+                  variant="string"
+                  style={{
+                    fontSize: "0.9rem",
+                    fontFamily: "Montserrat, sans-serif",
+                  }}
+                >
                   About: {recipient.about || "No Information"}
                 </Typography>
-                <Typography variant="string" style={{ margin: 0 }}>
+                <Typography
+                  color="grey"
+                  variant="string"
+                  style={{
+                    fontSize: "0.9rem",
+                    fontFamily: "Montserrat, sans-serif",
+                  }}
+                >
                   Address: {recipient.address || "No Information"}
                 </Typography>
               </AccordionDetails>
