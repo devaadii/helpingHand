@@ -67,7 +67,9 @@ function Login() {
       <div
         className="curve"
         style={{ background: `url(${image})`, backgroundSize: "cover" }}
-      ></div>
+      >
+        <div className="curve-content"></div>
+      </div>
       <div className="reg-id">
         <form
           style={{

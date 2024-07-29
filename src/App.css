@@ -96,6 +96,17 @@ h3 {
   border-bottom-left-radius: 50% 20px;
   border-bottom-right-radius: -50% 20px;
 }
+.curve-content {
+  margin: "0";
+  padding: 0;
+  background-color: #332222;
+  width: 100%;
+  opacity: 0.4;
+  height: 100%;
+  border-bottom-left-radius: 50% 20px;
+  border-bottom-right-radius: -50% 20px;
+}
+
 #top-img {
   width: 30vw;
 }
