@@ -25,6 +25,12 @@ function App() {
     }
   }, []);
 
+  // loader
+  // check if token exist
+  // yes -> if expired -> refresh token api
+  // redirect page
+  // stop loader
+
   return (
     <>
       <BrowserRouter>

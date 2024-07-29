@@ -315,12 +315,10 @@ function BloodDonationForm() {
       <Header />
       <img
         src={quote}
+        id="top-img"
         style={{
           display: "block",
           marginRight: "auto",
-          width: "30vw",
-
-          height: "auto",
         }}
       />
 

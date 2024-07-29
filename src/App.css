@@ -68,6 +68,9 @@ h3 {
 }
 
 @media (min-width: 1024px) {
+  #top-img {
+    max-width: 10vw;
+  }
   .login-button {
     width: 10vw;
   }
@@ -92,4 +95,7 @@ h3 {
   background-color: white;
   border-bottom-left-radius: 50% 20px;
   border-bottom-right-radius: -50% 20px;
+}
+#top-img {
+  width: 30vw;
 }
