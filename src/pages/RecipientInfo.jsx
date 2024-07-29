@@ -91,7 +91,7 @@ function RecipientInfo() {
   };
 
   return (
-    <div>
+    <div style={{ paddingBottom: "8vh" }}>
       <Header />
       <div
         className="form"
