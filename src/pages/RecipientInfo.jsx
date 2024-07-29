@@ -43,9 +43,7 @@ function RecipientInfo() {
       try {
         const res = await axiosInstance.get("/recipients");
         setRecipients(res.data.data);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     })();
   }, []);
 
@@ -62,9 +60,7 @@ function RecipientInfo() {
         mobileNumber,
       });
       console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const handleAccordionToggle = (recipientId) => {

@@ -29,8 +29,6 @@ function BloodDonationEntry() {
   const { recipientId } = useParams();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  console.log("recipientId: ", recipientId);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,7 +47,6 @@ function BloodDonationEntry() {
           `/blood-donation?recipient=${recipientId}&startDate&endDate&minUnitsDonated=0&maxUnitsDonated`
         );
         try {
-          console.log(res.data.data.entries);
           setEntries(res.data.data.entries);
         } catch (err) {
           console.log(err);
@@ -61,7 +58,6 @@ function BloodDonationEntry() {
           `/blood-donation?recipient&startDate&endDate&minUnitsDonated=0&maxUnitsDonated`
         );
         try {
-          console.log(res.data.data.entries);
           setEntries(res.data.data.entries);
         } catch (err) {
           console.log(err);
@@ -73,13 +69,11 @@ function BloodDonationEntry() {
   const handleStartDate = (e) => {
     const d = JSON.stringify(e.target.value);
     setStartDate(d);
-    console.log(d);
   };
 
   const handleEndDate = (e) => {
     const c = JSON.stringify(e.target.value);
     setEndDate(c);
-    console.log(c);
   };
 
   // const handleDateChange = (e, setter) => {
@@ -94,7 +88,6 @@ function BloodDonationEntry() {
         `blood-donation?recipient&startDate=${startDate}&endDate=${endDate}&minUnitsDonated=0&maxUnitsDonated`
       );
       try {
-        console.log(response.data.data);
         setEntries(response.data.data.entries);
       } catch (err) {
         console.log(err);
@@ -104,7 +97,6 @@ function BloodDonationEntry() {
         `blood-donation?recipient&startDate=${startDate}&endDate&minUnitsDonated=0&maxUnitsDonated`
       );
       try {
-        console.log(response.data.data);
         setEntries(response.data.data.entries);
       } catch (err) {
         console.log(err);
@@ -114,7 +106,6 @@ function BloodDonationEntry() {
         `blood-donation?recipient&startDate=${startDate}&endDate&minUnitsDonated=0&maxUnitsDonated`
       );
       try {
-        console.log(response.data.data);
         setEntries(response.data.data.entries);
       } catch (err) {
         console.log(err);

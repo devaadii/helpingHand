@@ -117,7 +117,6 @@ function BloodDonationForm() {
   const handleFileChange = (e) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
-      console.log(e.target.files[0]);
 
       const reader = new FileReader();
       reader.addEventListener("load", () => setImgSrc(reader.result));

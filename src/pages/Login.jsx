@@ -26,7 +26,6 @@ function Login() {
   useEffect(() => {
     if (localStorage.getItem("authData")) {
       navigate("/Blood-Donation");
-      console.log("called");
     }
   }, []);
 
@@ -45,14 +44,12 @@ function Login() {
         password,
       })
       .then((response) => {
-        console.log(response);
         localStorage.setItem("token", response.data.data.accessToken);
         setAuth(JSON.stringify(response.data.data));
         const authData = localStorage.setItem("authData", response.data.data);
         navigate("/Blood-Donation");
       })
       .catch((error) => {
-        console.log(error);
         setErrMessage(error.response.data.message);
         setOpen(true);
       });
