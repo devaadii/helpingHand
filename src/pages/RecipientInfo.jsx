@@ -101,7 +101,7 @@ function RecipientInfo() {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h6" sx={{ my: 2 }} className="name-h3">
+        <Typography variant="h6" fontWeight={600} sx={{ py: 2, ml: 1.5 }}>
           Recipient's Information
         </Typography>
         <Autocomplete
@@ -112,7 +112,7 @@ function RecipientInfo() {
             setSelectedRecipients(newValue);
           }}
           getOptionLabel={(option) => `${option.mobileNumber}`}
-          sx={{ width: "30vw" }}
+          sx={{ width: "35vw", marginRight: "10px" }}
           onInputChange={(e, newValue) => {
             searchRecipients(newValue);
           }}
@@ -129,9 +129,16 @@ function RecipientInfo() {
         }}
       >
         {recipients.map((recipient) => (
-          <li key={recipient._id}>
+          <li
+            key={recipient._id}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <Accordion
-              sx={{ my: 2 }}
+              sx={{ my: 1, width: "90vw" }}
               elevation={5}
               expanded={expanded === recipient._id}
             >

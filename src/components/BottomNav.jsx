@@ -53,7 +53,7 @@ function BottomNav() {
       >
         <BottomNavigation value={value} onChange={handleChange}>
           <BottomNavigationAction
-            label="Blood Donation Entries"
+            label="Entries"
             value="BloodDonation-entries"
             icon={<EditNoteIcon sx={{ fontSize: 30 }} />} // Increase icon size
             sx={{

@@ -188,78 +188,57 @@ function BloodDonationEntry() {
         {/* </div> */}
       </div>
       <Divider variant="middle" />
-
-      {/* <ul
+      <ul
         style={{
           listStyle: "none",
           display: "contents",
+          margin: 0,
+          padding: 0,
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          alignItems: "center",
         }}
-      > */}
-      {entries.map((entry, index) => {
-        return (
-          <>
-            {(index === 0) & (recipientId?.length > 15) ? (
-              <h2>{entry.recipient.fullName}</h2>
-            ) : null}
-            <Accordion elevation={5} sx={{ my: 2 }} key={entry._id}>
-              <AccordionSummary
-                expandIcon={<ExpandMore className="svg_icons" />}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
+      >
+        {entries.map((entry, index) => {
+          return (
+            <li style={{ width: "90vw" }}>
+              {(index === 0) & (recipientId?.length > 15) ? (
+                <h2>{entry.recipient.fullName}</h2>
+              ) : null}
+              <Accordion elevation={5} sx={{}} key={entry._id}>
+                <AccordionSummary
+                  expandIcon={<ExpandMore className="svg_icons" />}
+                >
+                  <div>
+                    {recipientId?.length < 15 ? (
+                      <Typography variant="h6" mb={0.5}>
+                        {entry.recipient.fullName}
+                      </Typography>
+                    ) : (
+                      <h4 style={{ margin: 0 }}>
+                        Units Donated: {entry.unitsDonated}
+                      </h4>
+                    )}
+
+                    <Typography
+                      fontSize="0.8rem"
+                      color="grey"
+                      sx={{ display: "flex", alignItems: "center", gap: 0.3 }}
+                    >
+                      <LocationOn fontSize="0.8rem" />{" "}
+                      {entry.organisation.name.toUpperCase()}
+                    </Typography>
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails
+                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
                   {recipientId?.length < 15 ? (
-                    <Typography variant="h6" mb={0.5}>
-                      {entry.recipient.fullName}
-                    </Typography>
-                  ) : (
                     <h4 style={{ margin: 0 }}>
                       Units Donated: {entry.unitsDonated}
                     </h4>
-                  )}
-
-                  <Typography
-                    fontSize="0.8rem"
-                    color="grey"
-                    sx={{ display: "flex", alignItems: "center", gap: 0.3 }}
-                  >
-                    <LocationOn fontSize="0.8rem" />{" "}
-                    {entry.organisation.name.toUpperCase()}
-                  </Typography>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails
-                sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
-              >
-                {recipientId?.length < 15 ? (
-                  <h4 style={{ margin: 0 }}>
-                    Units Donated: {entry.unitsDonated}
-                  </h4>
-                ) : null}
-                <Typography
-                  fontSize="0.8rem"
-                  color="grey"
-                  style={{
-                    margin: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                  }}
-                >
-                  <CalendarTodayIcon sx={{ fontSize: "1rem" }} />{" "}
-                  {new Date(entry.donatedOn).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </Typography>
-                {!recipientId ? (
+                  ) : null}
                   <Typography
                     fontSize="0.8rem"
                     color="grey"
@@ -270,33 +249,53 @@ function BloodDonationEntry() {
                       gap: 4,
                     }}
                   >
-                    <PersonIcon sx={{ fontSize: "1rem" }} />{" "}
-                    {entry.recipient.fullName}
+                    <CalendarTodayIcon sx={{ fontSize: "1rem" }} />{" "}
+                    {new Date(entry.donatedOn).toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </Typography>
-                ) : null}
+                  {!recipientId ? (
+                    <Typography
+                      fontSize="0.8rem"
+                      color="grey"
+                      style={{
+                        margin: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <PersonIcon sx={{ fontSize: "1rem" }} />{" "}
+                      {entry.recipient.fullName}
+                    </Typography>
+                  ) : null}
 
-                {entry.formImage && (
-                  <div
-                    style={{
-                      display: "flex",
-                      margin: "20px",
-                    }}
-                  >
-                    <a href={entry.formImage} download>
-                      <img
-                        style={{ width: "40vw" }}
-                        src={entry.formImage}
-                        alt="No Form Image Available"
-                      />
-                    </a>
-                  </div>
-                )}
-              </AccordionDetails>
-            </Accordion>
-          </>
-        );
-      })}
-      {/* </ul> */}
+                  {entry.formImage && (
+                    <div
+                      style={{
+                        display: "flex",
+                        margin: "20px",
+                      }}
+                    >
+                      <a href={entry.formImage} download>
+                        <img
+                          style={{ width: "40vw" }}
+                          src={entry.formImage}
+                          alt="No Form Image Available"
+                        />
+                      </a>
+                    </div>
+                  )}
+                </AccordionDetails>
+              </Accordion>
+            </li>
+          );
+        })}
+      </ul>
 
       <BottomNav />
     </div>
