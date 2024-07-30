@@ -61,9 +61,10 @@ function Login() {
         height: "100vh",
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
+        margin: 0,
+        padding: 0,
       }}
     >
-      {" "}
       <div
         className="curve"
         style={{ background: `url(${image})`, backgroundSize: "cover" }}
@@ -75,13 +76,12 @@ function Login() {
           style={{
             display: "flex",
             flexDirection: "column",
-
             justifyContent: "flex-start",
             alignItems: "center",
             gap: "20px",
           }}
         >
-          <h2 style={{ fontSize: "30px", margin: " 0" }}>Login</h2>
+          <h2 style={{ fontSize: "30px", margin: 0 }}>Login</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <TextField
               id="mobileNumber"
@@ -143,7 +143,7 @@ function Login() {
                   </InputAdornment>
                 ),
               }}
-            />{" "}
+            />
           </div>
           <Button
             className="login-button"
